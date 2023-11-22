@@ -1,0 +1,25 @@
+{% extends '..//base.html' %}
+
+{% block title %} order {% endblock title %}
+
+{% block content %}
+
+	 <!-- Main Content -->
+    <div class="container mt-4">
+
+        <!-- Shipping Information -->
+        <h2>Shipping Information</h2>
+        <form method="POST" action="{% url 'orders:order_create' %}">
+            <div class="mb-3">
+                
+                {{ form.as_p }}
+                {% csrf_token %}
+            <!-- Place Order Button -->
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary">Place Order</button>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock content %}

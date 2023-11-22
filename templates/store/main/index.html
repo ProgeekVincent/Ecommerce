@@ -1,0 +1,78 @@
+{% extends '..//base.html' %}
+
+{% block title %} Home {% endblock title %}
+
+{% block content %}
+
+	<style>
+        /* Customize the styling for the attractive section */
+        #attractive-section {
+            background-image: url('https://media.istockphoto.com/id/1405961113/photo/businessman-with-mobile-smartphone-in-hand-paying-online-shopping-on-virtual-interface-global.jpg?s=1024x1024&w=is&k=20&c=t8GirT4Orh-Q2FyG5UXn4OmPCsfZIapdXrsB8MG7UDY=');
+            background-size: cover;
+            color: #fff;
+            padding: 100px 0;
+            text-align: center;
+        }
+        #attractive-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+
+<!-- Main Content -->
+    <div class="container mt-4">
+
+    	<!-- Attractive Section -->
+        <section id="attractive-section">
+            <div id="attractive-content">
+                <h1>TripleD Online Shop</h1>
+                <p>Discover a world of amazing products and more.</p>
+           
+            </div>
+        </section>
+        <!-- Discover Section with Categories -->
+        <section id="discover">
+            <h1 style="text-align: center;">Discover</h1>
+
+
+            <!-- Category Cards -->
+            <div class="row">
+            	{% for category in categories %}
+	                <div class="col-md-4">
+	                    <div class="card">
+	                    	{% if category.image %}
+		                        <img src="{{ category.image.url }}" class="card-img-top" alt="No image">
+	                        {% endif %}
+	                        <div class="card-body">
+	                            <h5 class="card-title">{{ category.name }}</h5>
+	                            <p class="card-text">
+                                    Explore products in {{ category.name }}.
+                                </p>
+	                            <a href="{% url 'store:discover' category.id %}" class="btn btn-primary">Browse</a>
+	                        </div>
+	                    </div>
+	                </div>
+                {% endfor %}
+                
+            </div>
+
+            <!-- Pagination -->
+            <ul class="pagination justify-content-center">
+                {% if page.has_previous %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="?page={{ page.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                {% endif %}
+                <li class="page-item active"><a class="page-link" href="#">{{ page.number }}</a></li>
+               
+               {% if page.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page.next_page_number }}">Next</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </section>
+
+    </div>
+
+{% endblock content %}

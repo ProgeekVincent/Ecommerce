@@ -1,0 +1,42 @@
+{% extends '..//base.html' %}
+
+{% block title %} Contact {% endblock title %}
+
+{% block content %}
+
+<!-- Main Content -->
+    <div class="container mt-4">
+        <h1>Contact Us</h1>
+        <p>We'd love to hear from you. Please use the form below to get in touch.</p>
+
+        {% if messages %}
+          <div class="alert">
+
+          	{% for message in messages %}
+              	<p>{{ message }}</p>
+          	{% endfor %}       
+          </div>
+      	{% endif %}
+
+        <!-- Contact Form -->
+        <form method="POST" action="{% url 'account:contact' %}">
+        	{% csrf_token %}
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}

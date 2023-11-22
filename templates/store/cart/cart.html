@@ -1,0 +1,63 @@
+{% extends "..//base.html" %}
+{% load static %}
+{% block title %}
+	Your shopping cart
+{% endblock %}
+{% block content %}
+
+	<div class="container mt-4">
+        <h1>Shopping Cart</h1>
+
+        <!-- Cart Items -->
+        <table class="table">
+            <thead>
+                <tr>
+                	<th>Image</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+            	{% for item in cart %}
+	            	{% with product=item.product %}
+		                <tr>
+		                    <td>
+			                    <a href="{{ product.get_absolute_url }}">
+									<img src="{{ product.image.url }}" alt="No image" width="50" height="50">
+								</a>
+			                </td>
+			                <td>{{ product.name }}</td>
+		                    <td>{{ item.quantity }}</td>
+		                    <td>R{{ item.price }}</td>
+		                    <td>R{{ item.total_price }}</td>
+		                    <td>
+		                    	<form method="POST" action="{% url 'cart:cart_remove' product.id %}">
+		                    		<input type="submit" value="Remove">
+									{% csrf_token %}
+		                    	</form>
+		                    </td>
+		                </tr>
+		            {% endwith %}
+	            {% endfor %}
+                <!-- Add more rows for additional products in the cart -->
+            </tbody>
+        </table>
+
+        <!-- Cart Total -->
+        <div class="text-end">
+            <p><strong>Total:</strong> R{{ cart.get_total_price }}</p>
+        </div>
+
+        <!-- Checkout Button -->
+        <div class="text-end">
+            <a href="{% url 'orders:order_create' %}" class="btn btn-primary">Proceed to Checkout</a>
+            <a href="{% url 'store:product_list' %}" class="btn btn-primary">Continue Shopping</a>
+        </div>
+
+    </div>
+
+	
+{% endblock %}

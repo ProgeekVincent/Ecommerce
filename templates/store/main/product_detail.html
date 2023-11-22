@@ -1,0 +1,58 @@
+{% extends '..//base.html' %}
+
+{% block title %} {{ product.name }} {% endblock title %}
+
+
+{% block content %}
+	<div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+            	<a href="{{ product.image.url }}">
+	                <img src="{{ product.image.url }}" class="img-fluid" alt="Product Image" width="300" height="400">
+            	</a>
+            </div>
+            <div class="col-md-6">
+                <h1>{{ product.name }}</h1>
+                <p>Product Description: {{ product.description }}</p>
+                <p><strong>Price:</strong> R{{ product.price }}</p>
+                <p><strong>Category:</strong> {{ product.category.name }}</p>
+                <p><strong>Available Stock:</strong>
+	                {% if product.available %}
+		                Cape Town
+	                {% endif %}
+	            </p>
+	            <form method="POST" action="{% url 'cart:cart_add' product.id %}">
+	            	{% csrf_token %}
+	            	{{ form }}
+	            	<input type="submit" value="Add to cart" name="add_cart" class="btn btn-primary">
+	            	
+	            </form>
+            </div>
+        </div>
+
+         <!-- Additional Product Images Section (Carousel) -->
+        <div class="mt-4">
+            <h2>Additional Images</h2>
+            <div class="row">
+            	{% if product.other_image %}
+	            	{% for image in product.other_image.all %}
+		                <div class="col-md-2">
+		                	<a href="{{ image.image.url }}">
+			                    <img src="{{ image.image.url }}" class="img-fluid" alt="No image" width="100" height="100">
+		                	</a>
+		                </div>
+	                {% endfor %}
+
+
+	            {% else %}
+		            No other images.    
+                {% endif %}
+	            
+            </div>
+        </div>
+        
+        
+        <!-- Additional Product Information Section -->
+        
+    </div>
+{% endblock content %}
